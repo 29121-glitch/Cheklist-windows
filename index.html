@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checklist de Segurança do Windows</title>
+ <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <div class="checklist-container">
+    <h1>Checklist de Segurança do Windows</h1>
+
+    <ul id="checklist">
+      <li><label><input type="checkbox" /> Windows Defender</label></li>
+      <li><label><input type="checkbox" /> Firewall e proteção de rede</label></li>
+      <li><label><input type="checkbox" /> Windows Hello</label></li>
+      <li><label><input type="checkbox" /> Proteção de contas</label></li>
+      <li><label><input type="checkbox" /> Segurança do dispositivo</label></li>
+    </ul>
+
+    <div class="security-bar-container">
+      <div class="security-bar" id="securityBar"></div>
+    </div>
+    <div class="percentage-text" id="percentageText">0% de Segurança</div>
+  </div>
+
+  <script>
+    const checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+    const bar = document.getElementById('securityBar');
+    const percentageText = document.getElementById('percentageText');
+
+    function updateSecurityBar() {
+      const total = checkboxes.length;
+      const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+      const percent = Math.round((checked / total) * 100);
+
+      bar.style.width = percent + '%';
+
+      if (percent < 40) {
+        bar.style.backgroundColor = 'red';
+      } else if (percent < 70) {
+        bar.style.backgroundColor = 'orange';
+      } else {
+        bar.style.backgroundColor = 'green';
+      }
+
+      percentageText.textContent = percent + '% de Segurança';
+    }
+
+    checkboxes.forEach(cb => cb.addEventListener('change', updateSecurityBar));
+  </script>
+
+</body>
+</html>
